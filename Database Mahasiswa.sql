@@ -21,16 +21,17 @@ USE `mahasiswa`;
 DROP TABLE IF EXISTS `mhs`;
 
 CREATE TABLE `mhs` (
-  `Nama` varchar(25) DEFAULT NULL,
-  `NIM` varchar(10) NOT NULL,
-  `Alamat` varchar(225) DEFAULT NULL,
+  `Nama` VARCHAR(25) DEFAULT NULL,
+  `NIM` VARCHAR(10) NOT NULL,
+  `Alamat` VARCHAR(225) DEFAULT NULL,
   PRIMARY KEY (`NIM`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `mhs` */
 
-insert  into `mhs`(`Nama`,`NIM`,`Alamat`) values 
+INSERT  INTO `mhs`(`Nama`,`NIM`,`Alamat`) VALUES 
 ('ZeroIchiro','2301010429','Denpasar');
+
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
