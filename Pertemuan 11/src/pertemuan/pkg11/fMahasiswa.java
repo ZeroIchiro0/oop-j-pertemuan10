@@ -36,6 +36,17 @@ public class fMahasiswa extends javax.swing.JFrame {
         this.ListDT();
         tombol(false);
         cBARU.setEnabled(true);
+        fieldIsian(false);
+    }
+    
+    private void destroydta(String nim) throws SQLException{
+        Connection cnn = koneksi();
+        if(!cnn.isClosed()){
+            PreparedStatement PS = cnn.prepareStatement("DELETE FROM mhs WHERE NIM =?;");
+            PS.setString(1, nim);
+            PS.executeUpdate();
+        }
+        
     }
     
     private void tombol(boolean opsi){
@@ -43,6 +54,13 @@ public class fMahasiswa extends javax.swing.JFrame {
         cUBAH.setEnabled(opsi);
         cHAPUS.setEnabled(opsi);
     }
+    
+    private void fieldIsian (boolean opsi){
+        txNIM.setEnabled(opsi);
+        txNAMA.setEnabled(opsi);
+        txALAMAT.setEnabled(opsi);
+    }
+    
     
     private void cleartextfield(){
         txNIM.setText("");
@@ -177,6 +195,11 @@ public class fMahasiswa extends javax.swing.JFrame {
         });
 
         cHAPUS.setText("Hapus");
+        cHAPUS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cHAPUSActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -190,22 +213,6 @@ public class fMahasiswa extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addGap(663, 663, 663))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel1)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 737, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(txNIM, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txNAMA, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(cBARU)
@@ -216,7 +223,21 @@ public class fMahasiswa extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(cTUTUP))
                             .addComponent(txALAMAT, javax.swing.GroupLayout.PREFERRED_SIZE, 737, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 737, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(txNIM, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(txNAMA, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cBARU, cHAPUS, cTUTUP, cUBAH});
@@ -278,6 +299,8 @@ public class fMahasiswa extends javax.swing.JFrame {
         txNIM.setText(TM.getValueAt(TM.getSelectedRow(), 0).toString());
         txNAMA.setText(TM.getValueAt(TM.getSelectedRow(), 1).toString());
         txALAMAT.setText(TM.getValueAt(TM.getSelectedRow(), 2).toString());
+        cUBAH.setEnabled(true);
+        cHAPUS.setEnabled(true);
     }//GEN-LAST:event_TMMouseClicked
 
     private void cUBAHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cUBAHActionPerformed
@@ -289,6 +312,16 @@ public class fMahasiswa extends javax.swing.JFrame {
         System.exit(0);
         
     }//GEN-LAST:event_cTUTUPActionPerformed
+
+    private void cHAPUSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cHAPUSActionPerformed
+        String nim = txNIM.getText();
+        try {
+            destroydta(nim);
+            ListDT();
+        } catch (SQLException ex) {
+            Logger.getLogger(fMahasiswa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cHAPUSActionPerformed
 
     /**
      * @param args the command line arguments
